@@ -12,14 +12,14 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    docker.build('my-app')
+                  sh 'docker build -t my-app .'
                 }
             }
         }
         stage('Run Docker container') {
             steps {
                 script {
-                    docker.image('my-app').run('--name my-app -p 3000:3000')
+                    sh 'docker run -d --name my-app -p 8080:8080 my-app'
                 }
             }
         }
