@@ -1,20 +1,14 @@
 pipeline {
     agent any
-    environment {
-        CI = 'true'
-    }
-    tools {
-        nodejs 'NodeJS-21.1.0'
-    }
     stages {
-        stage('Build') {
+        stage('Build Docker image') {
             steps {
-                sh 'npm install'
+                sh 'docker build -t my-app .'
             }
         }
-        stage('Deliver') {
+        stage('Run Docker container') {
             steps {
-                sh './scripts/deliver.sh'
+                sh 'docker run -d -p 3000:3000 my-app'
             }
         }
     }
